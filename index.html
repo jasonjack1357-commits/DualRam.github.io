@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple POS (HTML/CSS/JS)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">POS</div>
+      <div>
+        <div class="brand-title">Simple POS</div>
+        <div class="brand-sub">HTML • CSS • JavaScript</div>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="btnNewSale" class="btn ghost" title="Clear cart">New Sale</button>
+      <button id="btnReceipt" class="btn primary">Print Receipt</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT: Product catalog -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Products</h2>
+        <div class="search-wrap">
+          <input id="searchInput" type="search" placeholder="Search product (name / barcode)..." />
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="panel-foot">
+        <button id="btnAddProduct" class="btn">+ Add Product</button>
+        <span class="hint">Saved in your browser (localStorage)</span>
+      </div>
+    </section>
+
+    <!-- RIGHT: Cart -->
+    <aside class="panel cart-panel">
+      <div class="panel-head">
+        <h2>Cart</h2>
+        <div class="pill" id="cartCount">0 items</div>
+      </div>
+
+      <div class="cart-list" id="cartList"></div>
+
+      <div class="cart-controls">
+        <div class="row">
+          <label>Discount (%)</label>
+          <input id="discountInput" type="number" min="0" max="100" step="1" value="0" />
+        </div>
+        <div class="row">
+          <label>Tax (%)</label>
+          <input id="taxInput" type="number" min="0" max="100" step="1" value="0" />
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="line">
+          <span>Subtotal</span><strong id="subtotalText">$0.00</strong>
+        </div>
+        <div class="line">
+          <span>Discount</span><strong id="discountText">-$0.00</strong>
+        </div>
+        <div class="line">
+          <span>Tax</span><strong id="taxText">$0.00</strong>
+        </div>
+        <div class="line total">
+          <span>Total</span><strong id="totalText">$0.00</strong>
+        </div>
+
+        <div class="pay">
+          <div class="row">
+            <label>Cash Received</label>
+            <input id="cashInput" type="number" min="0" step="0.01" placeholder="0.00" />
+          </div>
+          <div class="line change">
+            <span>Change</span><strong id="changeText">$0.00</strong>
+          </div>
+          <button id="btnComplete" class="btn success">Complete Sale</button>
+          <div class="tiny" id="completeMsg"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Add Product Modal -->
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Add Product</h3>
+        <button class="icon-btn" id="closeProductModal" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="field">
+            <label>Barcode</label>
+            <input id="pBarcode" type="text" placeholder="e.g. 701228" />
+          </div>
+          <div class="field">
+            <label>Name</label>
+            <input id="pName" type="text" placeholder="e.g. Coca Cola" />
+          </div>
+          <div class="field">
+            <label>Price</label>
+            <input id="pPrice" type="number" min="0" step="0.01" placeholder="e.g. 23.00" />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn ghost" id="cancelProduct">Cancel</button>
+          <button class="btn primary" id="saveProduct">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div class="modal" id="receiptModal" aria-hidden="true">
+    <div class="modal-card receipt-card">
+      <div class="modal-head">
+        <h3>Receipt</h3>
+        <button class="icon-btn" id="closeReceiptModal" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="receipt" id="receiptArea"></div>
+        <div class="modal-actions">
+          <button class="btn ghost" id="btnCloseReceipt">Close</button>
+          <button class="btn primary" id="btnPrintNow">Print</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
